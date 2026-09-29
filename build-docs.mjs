@@ -4,7 +4,7 @@ const require = createRequire('C:/Users/orban/.claude/tools/md2pdf/');
 const { marked } = require('marked');
 const md = readFileSync('D:/Munka/AI_munkakonyvtar/Vibe_Coding/cfr-dashboard/hello-world/docs/getting-started.md', 'utf8');
 // Drop the H1 (the page template renders its own) and render the rest.
-const body = marked.parse(md.replace(/^# .*\n/, ''), { gfm: true });
+const body = marked.parse(md.replace(/^# [^\r\n]*\r?\n/, ''), { gfm: true });
 const html = `<!doctype html>
 <html lang="en">
 <head>
