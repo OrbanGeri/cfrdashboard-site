@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting started – CFR Dashboard</title>
+<meta name="description" content="Set up CFR Dashboard for Jira in about five minutes: tokens, configuration, dashboard, issue panel and event export.">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="page">
+  <nav><a href="/">Home</a><a href="/docs/">Documentation</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">End User Terms</a></nav>
+  <h1>CFR Dashboard for Jira — Getting started</h1>
+<h1>CFR Dashboard for Jira — Getting started</h1>
+<p>CFR Dashboard shows your team&#39;s <strong>Change Failure Rate (CFR)</strong> and <strong>Mean Time to Restore (MTTR)</strong> inside Jira. It reads
+the commits of your Git repository and finds <em>revert commits</em> — so you get the numbers without any CI/CD setup,
+incident-management tooling, or issue-linking discipline.</p>
+<p><strong>Setup takes about 5 minutes.</strong> You need to be an admin of the Jira project and to create one read-only token in your
+Git provider.</p>
+<h2>Requirements</h2>
+<ul>
+<li>Jira Cloud.</li>
+<li>A repository on a <strong>cloud-hosted</strong> provider: <strong>GitHub (github.com), GitLab (gitlab.com), Bitbucket Cloud
+(bitbucket.org) or Azure Repos (dev.azure.com)</strong>. Self-hosted versions (GitHub Enterprise Server, Bitbucket Data
+Center, self-managed GitLab, Azure DevOps Server) are not supported.</li>
+<li>Project admin permission in Jira (the settings page lives under <em>Project settings</em>).</li>
+</ul>
+<h2>How the numbers are calculated</h2>
+<ul>
+<li><strong>CFR</strong> = revert commits ÷ all commits in the analysis window. A commit counts as a revert when its message follows
+Git&#39;s standard format: <code>Revert &quot;…&quot;</code> together with a <code>This reverts commit &lt;sha&gt;</code> line (what <code>git revert</code> and the
+provider&#39;s <em>Revert</em> buttons produce).</li>
+<li><strong>MTTR</strong> = the average time between an original commit and the commit that reverted it (only for reverts that could
+be paired with their original commit). It shows <strong>N/A</strong> when no revert can be paired.</li>
+<li>The rating (Elite / High / Medium / Low) follows the cluster values of the 2024 DORA report.</li>
+</ul>
+<h2>Step 1 — Create a read-only token in your Git provider</h2>
+<p>Create a token that can <strong>only read</strong> the repository. It is used by the app to list commits (messages, dates and
+SHAs). The app never downloads source code.</p>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>What to create</th>
+<th>Required permission</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GitHub</td>
+<td>Fine-grained personal access token, limited to the one repository</td>
+<td><strong>Contents: Read-only</strong></td>
+</tr>
+<tr>
+<td>GitLab</td>
+<td>Fine-grained personal access token (or a classic token)</td>
+<td><strong>Commit: Read</strong> <em>and</em> <strong>Project: Read</strong> (classic token: the <code>read_repository</code> scope)</td>
+</tr>
+<tr>
+<td>Bitbucket Cloud</td>
+<td>Repository access token</td>
+<td><strong>Read-only</strong> access</td>
+</tr>
+<tr>
+<td>Azure Repos</td>
+<td>Personal access token</td>
+<td><strong>Code: Read</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>GitLab note:</strong> without <em>Project: Read</em> the app cannot read the project metadata and you get a
+<code>403 insufficient_granular_scope</code> error when saving.</p>
+</blockquote>
+<p>Give the token the shortest expiry you are comfortable with — you only need to paste it again when it expires.</p>
+<h2>Step 2 — Configure the project in Jira</h2>
+<ol>
+<li>Open the project → <strong>Project settings → Apps → CFR Dashboard</strong>.</li>
+<li>Select the <strong>Git provider</strong> and fill in the repository fields:<ul>
+<li>GitHub / GitLab / Bitbucket: owner (workspace / namespace) and repository name;</li>
+<li>Azure Repos: organization, project and repository.</li>
+</ul>
+</li>
+<li>Set the <strong>analysis window</strong> (days, default 90) and paste the <strong>token</strong>.</li>
+<li>Click <strong>Save</strong>. The app checks that the repository is reachable with your token before saving.</li>
+</ol>
+<p>The token is stored per project in Forge&#39;s encrypted secret storage. It is never displayed again — if you leave the
+token field empty on a later save, the saved token stays in effect.</p>
+<h2>Step 3 — Open the dashboard</h2>
+<p>Open the <strong>CFR Dashboard</strong> tab in the project navigation (next to Summary, List and Board). The first load fetches the commits and calculates the metrics; results
+are cached for 15 minutes (saving the settings refreshes them). Everyone who can view the project can open the
+dashboard — they do <strong>not</strong> need access to the repository, because the app uses the project&#39;s token.</p>
+<p><strong>Who can do what</strong> (checked by the app on every request, as the signed-in user):</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Required Jira permission</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Open the dashboard, the issue panel and generate the CSV</td>
+<td><em>Browse projects</em> in that project</td>
+</tr>
+<tr>
+<td>Change the settings, use <strong>Sync now</strong></td>
+<td><em>Administer projects</em> in that project (the <strong>Sync now</strong> button is hidden for everyone else)</td>
+</tr>
+</tbody></table>
+<h2>Optional: issue panel</h2>
+<p>The <strong>CFR Dashboard — revert history</strong> panel shows the reverts that belong to the current issue.</p>
+<blockquote>
+<p><strong>The panel is hidden by default.</strong> This is how Jira treats every app panel. On each issue, click the <strong>gear icon</strong>
+below the issue title (&quot;View app actions&quot;) and choose <em>CFR Dashboard — revert history</em> from the menu.</p>
+</blockquote>
+<p>The issue is identified by the <strong>issue key in the commit message</strong> (for example <code>KAN-12: fix rounding</code>). A revert
+whose message contains no issue key is counted in the dashboard but does not appear in any issue panel.</p>
+<h2>Optional: export events</h2>
+<p>In the <strong>Event export</strong> block of the dashboard every commit becomes a <code>deploy</code> event, and every revert an additional
+<code>revert</code> event that references the reverted commit — ready to be combined with your other business metrics.</p>
+<ul>
+<li><strong>Download CSV as a file</strong> — a real <code>.csv</code> download.</li>
+<li><strong>Context fields</strong> — in the settings you can pick Jira fields (for example a custom <em>Acceptance Criteria</em> field).
+Their values are read from the issue named in the commit message and added to the export (as columns in the CSV, as a
+JSON <code>context</code> field in destination systems).</li>
+<li><strong>Team name</strong> — defaults to the Jira project key; can be changed in the settings.</li>
+</ul>
+<h3>Sending events to your own data warehouse</h3>
+<p>In <strong>Project settings → Apps → CFR Dashboard → Destination system</strong> you can push the events to your own account:</p>
+<table>
+<thead>
+<tr>
+<th>Destination</th>
+<th>Authentication</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Google BigQuery</strong></td>
+<td>Service account JSON key with the <em>BigQuery Data Editor</em> role</td>
+<td>The Google Cloud project needs a <strong>billing account linked</strong>, otherwise streaming inserts are rejected (<code>403</code>)</td>
+</tr>
+<tr>
+<td><strong>Amazon S3</strong></td>
+<td>JSON <code>{&quot;accessKeyId&quot;: &quot;...&quot;, &quot;secretAccessKey&quot;: &quot;...&quot;}</code></td>
+<td>Each sync writes one timestamped <code>.jsonl</code> object. A narrow IAM policy is enough: <code>s3:ListBucket</code> on the bucket and <code>s3:PutObject</code> on its objects. Regions: <code>us-east-1</code>, <code>us-east-2</code>, <code>us-west-1</code>, <code>us-west-2</code>, <code>eu-west-1</code>, <code>eu-central-1</code>, <code>ap-southeast-1</code>, <code>ap-southeast-2</code></td>
+</tr>
+</tbody></table>
+<p>The destination is always <strong>your own</strong> account; events go there directly from the app. Sync can be <strong>manual</strong> (the
+<em>Sync now</em> button) or <strong>automatic</strong> (hourly, daily or weekly). If a period holds more commits than one run can read,
+the sync continues on the next runs until the whole period is sent — no events are lost.</p>
+<h2>Limits</h2>
+<ul>
+<li>Cloud-hosted Git providers only (see Requirements).</li>
+<li>The dashboard and the CSV export read at most <strong>500 commits</strong> per run. If your repository is busier, a <strong>Commit limit
+reached</strong> warning appears — shorten the analysis window to include everything.</li>
+<li>Authentication is by read-only token (no OAuth &quot;Connect&quot; button).</li>
+<li>The DORA rating follows the 2024 report.</li>
+</ul>
+<h2>Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause and fix</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Saving fails with &quot;repository unreachable&quot;</td>
+<td>Check the owner/organization/repository spelling and that the token has the permission listed in Step 1 and has not expired</td>
+</tr>
+<tr>
+<td>GitLab: <code>403 insufficient_granular_scope</code></td>
+<td>Add <strong>Project: Read</strong> to the token</td>
+</tr>
+<tr>
+<td>MTTR shows <strong>N/A</strong></td>
+<td>No revert could be paired with its original commit — the message must contain the <code>This reverts commit &lt;sha&gt;</code> line</td>
+</tr>
+<tr>
+<td>The issue panel does not show up</td>
+<td>Enable it per issue with the gear icon (see <em>Optional: issue panel</em>)</td>
+</tr>
+<tr>
+<td>The dashboard shows no reverts</td>
+<td>Only commits inside the analysis window are read; extend the window, or check that your reverts follow Git&#39;s standard message format</td>
+</tr>
+<tr>
+<td>BigQuery sync returns <code>403</code></td>
+<td>Link a billing account to the Google Cloud project</td>
+</tr>
+<tr>
+<td>Numbers look outdated</td>
+<td>Results are cached for 15 minutes; saving the settings refreshes them</td>
+</tr>
+<tr>
+<td>&quot;You do not have permission to do this in this project&quot;</td>
+<td>The action needs the <em>Administer projects</em> permission (settings, <strong>Sync now</strong>) or <em>Browse projects</em> (dashboard, CSV) in the project you are looking at</td>
+</tr>
+<tr>
+<td>Saving fails with a message about characters that are not allowed</td>
+<td>The repository owner, name, bucket or dataset contains characters the provider does not allow — check the spelling</td>
+</tr>
+</tbody></table>
+<h2>Data handling</h2>
+<p>The app reads commit messages, dates and SHAs from your Git provider and, only if you select context fields, the
+values of those Jira fields for the issues named in commit messages. Tokens and destination credentials are stored in
+Forge&#39;s encrypted secret storage. Nothing is sent anywhere except to your Git provider&#39;s API and — if you configure
+one — your own destination system. See the <a href="https://cfrdashboard.app/privacy/">Privacy Policy</a>.</p>
+<h2>Support</h2>
+<p><a href="mailto:support@cfrdashboard.app">support@cfrdashboard.app</a> — please include your Jira site name, the project key and what you see on the
+dashboard (never send tokens).</p>
+
+  <footer>CFR Dashboard · Gergely Orbán, sole proprietor (Hungary)</footer>
+</div>
+</body>
+</html>
