@@ -23,7 +23,7 @@ Git provider.</p>
 <li>A repository on a <strong>cloud-hosted</strong> provider: <strong>GitHub (github.com), GitLab (gitlab.com), Bitbucket Cloud
 (bitbucket.org) or Azure Repos (dev.azure.com)</strong>. Self-hosted versions (GitHub Enterprise Server, Bitbucket Data
 Center, self-managed GitLab, Azure DevOps Server) are not supported.</li>
-<li>Project admin permission in Jira (the settings page lives under <em>Project settings</em>).</li>
+<li>Project admin permission in Jira (the settings page lives under <em>Project settings</em>, which some Jira versions call <em>Space settings</em>).</li>
 </ul>
 <h2>How the numbers are calculated</h2>
 <ul>
@@ -73,7 +73,7 @@ SHAs). The app never downloads source code.</p>
 <p>Give the token the shortest expiry you are comfortable with — you only need to paste it again when it expires.</p>
 <h2>Step 2 — Configure the project in Jira</h2>
 <ol>
-<li>Open the project → <strong>Project settings → Apps → CFR Dashboard</strong>.</li>
+<li>Open the project → <strong>Project settings → Apps → CFR Dashboard</strong> (in Jira versions that call projects <em>spaces</em>: <strong>Space settings → Apps → CFR Dashboard</strong>).</li>
 <li>Select the <strong>Git provider</strong> and fill in the repository fields:<ul>
 <li>GitHub / GitLab / Bitbucket: owner (workspace / namespace) and repository name;</li>
 <li>Azure Repos: organization, project and repository.</li>
@@ -124,7 +124,7 @@ JSON <code>context</code> field in destination systems).</li>
 <li><strong>Team name</strong> — defaults to the Jira project key; can be changed in the settings.</li>
 </ul>
 <h3>Sending events to your own data warehouse</h3>
-<p>In <strong>Project settings → Apps → CFR Dashboard → Destination system</strong> you can push the events to your own account:</p>
+<p>In <strong>Project settings</strong> (or <em>Space settings</em>) <strong>→ Apps → CFR Dashboard → Destination system</strong> you can push the events to your own account:</p>
 <table>
 <thead>
 <tr>
