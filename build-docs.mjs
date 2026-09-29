@@ -16,7 +16,7 @@ const html = `<!doctype html>
 </head>
 <body>
 <div class="page">
-  <nav><a href="/">Home</a><a href="/docs/">Documentation</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">End User Terms</a></nav>
+  <nav><a href="/">Home</a><a href="/docs/">Documentation</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">End User Terms</a><a href="/dpa/">DPA</a></nav>
   <h1>CFR Dashboard for Jira — Getting started</h1>
 ${body}
   <footer>CFR Dashboard · Gergely Orbán, sole proprietor (Hungary)</footer>

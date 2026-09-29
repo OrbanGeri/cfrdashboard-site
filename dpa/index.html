@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Processing Addendum – CFR Dashboard</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="page">
+  <nav><a href="/">Home</a><a href="/docs/">Documentation</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">End User Terms</a><a href="/dpa/">DPA</a></nav>
+  <h1>CFR Dashboard — Data Processing Addendum</h1>
+  <p class="sub">Effective: 30 September 2026 · Version 1.0</p>
+
+  <h2>1. Parties and scope</h2>
+  <p>This Data Processing Addendum ("DPA") is between <strong>Gergely Orbán, sole proprietor, Hungary</strong> ("Processor", "Provider") and the organization that installs the CFR Dashboard app ("Controller", "Customer"). It is the "Data Protection Addendum" referred to in the <a href="/terms/">End User Terms</a> and forms part of them.</p>
+  <p>It applies to personal data that the Provider processes on the Controller's behalf and instructions when operating the App, within the meaning of Article 4(8) and Article 28 of the GDPR and, where relevant, other applicable data protection law.</p>
+
+  <h2>2. Subject matter, duration, nature and purpose</h2>
+  <table>
+    <tr><th>Item</th><th>Description</th></tr>
+    <tr><td>Subject matter</td><td>Processing needed to run the App for the Controller's Jira projects</td></tr>
+    <tr><td>Duration</td><td>From installation of the App until it is uninstalled or the agreement ends</td></tr>
+    <tr><td>Nature</td><td>Automated processing: retrieving Git commit data and selected Jira field values, calculating metrics, and optionally exporting events to a destination chosen by the Controller</td></tr>
+    <tr><td>Purpose</td><td>Calculating and displaying Change Failure Rate and Mean Time to Restore, and optionally exporting the underlying event data</td></tr>
+  </table>
+
+  <h2>3. Categories of data subjects and personal data</h2>
+  <ul>
+    <li><strong>Data subjects:</strong> users of the Controller's Jira site whose names or identifiers appear in Jira field values the Controller's administrator selects as context fields; people who commit to the connected Git repository, to the extent their names appear in commit message text.</li>
+    <li><strong>Personal data:</strong> the text content of Jira fields selected by the Controller's administrator (depends on the Controller's choice); free text of Git commit messages, which may incidentally contain personal names.</li>
+    <li><strong>Not included:</strong> structured commit author name or e-mail fields (not retrieved or stored), financial data, health data or other special categories. The Controller must not select fields containing such data.</li>
+  </ul>
+
+  <h2>4. Processor obligations</h2>
+  <p>The Processor will:</p>
+  <ol>
+    <li>process personal data only on the Controller's documented instructions, including administrator choices made in the App's settings (Git provider and token, context fields, destination and sync settings), and not use it for other purposes;</li>
+    <li>ensure that persons authorized to process the data are bound by confidentiality (the Processor being a sole developer);</li>
+    <li>apply appropriate technical and organizational measures, including Forge's encrypted secret storage for credentials, the least-privilege scope principle, per-request permission checks and input validation;</li>
+    <li>assist the Controller, within a reasonable time, in responding to data subject requests (access, rectification, erasure, portability, objection);</li>
+    <li>assist the Controller with obligations under Articles 32–36 of the GDPR (security, breach notification, impact assessments), to the extent of the information available to the Processor;</li>
+    <li>at the end of the agreement, and at the Controller's choice, delete or return the Controller's data related to the App, unless law requires retention.</li>
+  </ol>
+
+  <h2>5. Sub-processors</h2>
+  <p><strong>Atlassian (Forge platform).</strong> The Processor uses the Atlassian Forge platform to run the App and store its data. Atlassian's commitments are set out in the <a href="https://developer.atlassian.com/platform/forge/resources/Forge-Data-Processing-Addendum.pdf">Forge Data Processing Addendum</a> and the <a href="https://www.atlassian.com/legal/data-processing-addendum">Atlassian Data Processing Addendum</a>. The chain is: Controller (controller) → Provider (processor) → Atlassian (sub-processor).</p>
+  <p>The Processor will inform the Controller in advance if it engages a different or additional sub-processor. The Controller may object within <strong>30 days</strong> of that notice.</p>
+  <p><strong>Not sub-processors:</strong> the Git provider (GitHub, Bitbucket Cloud, GitLab.com, Azure Repos) and the export destination (Google BigQuery, Amazon S3) chosen and configured by the Controller. These are the Controller's own accounts and services, accessed with credentials the Controller supplies; the Controller's agreements with them govern their processing.</p>
+
+  <h2>6. Personal data breach</h2>
+  <p>The Processor will notify the Controller of a personal data breach affecting personal data it processes for the Controller without undue delay and in any case <strong>within 48 hours</strong> of becoming aware of it, providing the information then available on the nature of the breach, its likely consequences and the measures taken or proposed.</p>
+
+  <h2>7. Audit</h2>
+  <p>On reasonable written notice of at least 30 days, and no more than once a year, the Controller may verify the Processor's compliance with this DPA. Given the Processor's size, verification is primarily document-based (questionnaire; reference to the Forge platform's security documentation). On-site audits only in particularly justified cases on agreed terms.</p>
+
+  <h2>8. International transfers</h2>
+  <p>Where processing involves transfers outside the European Economic Area (for example through the Atlassian Forge infrastructure, or a Git provider or destination region chosen by the Controller), the transfer mechanisms set out in Atlassian's <a href="https://www.atlassian.com/legal/data-transfer-impact-assessment">Data Transfer Impact Assessment</a> and, between the Processor and Atlassian, the applicable Standard Contractual Clauses apply.</p>
+
+  <h2>9. Liability, term and contact</h2>
+  <p>Liability under this DPA is governed by the liability provisions of the agreement (the Standard Agreement and the Provider-Specific Terms), without affecting liability that cannot be limited under mandatory law. This DPA takes effect with the End User Terms and lasts as long as the Processor processes personal data on the Controller's behalf.</p>
+  <p>Data protection and DPA enquiries: <a href="mailto:support@cfrdashboard.app">support@cfrdashboard.app</a></p>
+
+  <footer>CFR Dashboard · Gergely Orbán, sole proprietor (Hungary)</footer>
+</div>
+</body>
+</html>
