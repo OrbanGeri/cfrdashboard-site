@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support – CFR Dashboard</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="page">
+  <nav><a href="/">Home</a><a href="/docs/">Documentation</a><a href="/support/">Support</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">End User Terms</a><a href="/dpa/">DPA</a></nav>
+  <h1>CFR Dashboard — Support</h1>
+  <p class="sub">CFR Dashboard for Jira (Atlassian Marketplace, Jira Cloud)</p>
+
+  <h2>Contact</h2>
+  <p>E-mail: <a href="mailto:support@cfrdashboard.app">support@cfrdashboard.app</a></p>
+  <p>Support is provided on a best-effort basis, without a formal service level agreement (see section 2.6 of the <a href="/terms/">End User Terms</a>). We read every message and reply as soon as we can, typically within a few business days.</p>
+
+  <h2>Before you write</h2>
+  <p>Many questions are answered in the <a href="/docs/">documentation</a>: connecting a repository, the access token permissions, how reverts are detected, CSV export and BigQuery / Amazon S3 sync.</p>
+  <p>A frequent cause of an empty or failed dashboard is an expired or under-privileged Git token. The error message on the dashboard names the provider and the HTTP status (for example <em>401 Bad credentials</em>); replacing the token under <em>Project settings → Apps → CFR Dashboard</em> usually solves it.</p>
+
+  <h2>What to include in a bug report</h2>
+  <ul>
+    <li>Your Jira Cloud site URL and the project key.</li>
+    <li>The Git provider (GitHub, GitLab, Bitbucket Cloud or Azure Repos) and the repository name.</li>
+    <li>The exact error message shown in the app, and what you expected to see.</li>
+    <li>Steps to reproduce, and a screenshot if helpful.</li>
+  </ul>
+  <p><strong>Please never send access tokens, passwords or other credentials by e-mail.</strong> We will never ask for them.</p>
+
+  <h2>Security and privacy</h2>
+  <p>Security reports: <a href="mailto:security@cfrdashboard.app">security@cfrdashboard.app</a>. How the app handles data: <a href="/privacy/">Privacy Policy</a>.</p>
+
+  <footer>CFR Dashboard · Gergely Orbán, sole proprietor (Hungary)</footer>
+</div>
+</body>
+</html>
